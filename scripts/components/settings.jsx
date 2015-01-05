@@ -39,6 +39,11 @@ var React = require('react'),
         this.forceUpdate();
       },
 
+      _handleComplete: function (e) {
+        PageActions.updateSettings("showCompleted", {value: e.target.checked});
+        this.setState({settings: PageStore.getSettings()});
+      },
+
       _onUpdate: function (e) {
         var updates = {
           "monday" : TagStore.getTagIds(this.state.daysOfWeek.monday),
@@ -54,36 +59,55 @@ var React = require('react'),
 
       render: function() {
         return (
-          <section role="region" className="nice-padding fit scroll">
-            <div className="small">If you like to pray for just some of your prayer requests on a specific day,
-              please enter a tag!
-            </div>
-            <div className="nice-tb-padding">
-              <form>
-                <p>
-                  <input type="text" placeholder="Monday" required="" name="monday" value={this.state.daysOfWeek.monday} onChange={this._handleInput}/>
-                </p>
-                <p>
-                  <input type="text" placeholder="Tuesday" required="" name="tuesday" value={this.state.daysOfWeek.tuesday} onChange={this._handleInput}/>
-                </p>
-                <p>
-                  <input type="text" placeholder="Wednesday" required="" name="wednesday" value={this.state.daysOfWeek.wednesday} onChange={this._handleInput}/>
-                </p>
-                <p>
-                  <input type="text" placeholder="Thursday" required="" name="thursday" value={this.state.daysOfWeek.thursday} onChange={this._handleInput}/>
-                </p>
-                <p>
-                  <input type="text" placeholder="Friday" required="" name="friday" value={this.state.daysOfWeek.friday} onChange={this._handleInput}/>
-                </p>
-                <p>
-                  <input type="text" placeholder="Saturday" required="" name="saturday" value={this.state.daysOfWeek.saturday} onChange={this._handleInput}/>
-                </p>
-                <p>
-                  <input type="text" placeholder="Sunday" required="" name="sunday" value={this.state.daysOfWeek.sunday} onChange={this._handleInput}/>
-                </p>
-              </form>
-            </div>
-            <div className="small">Available tags: {this.state.tags}</div>
+          <section role="region" className="fit scroll">
+            <section data-type="list">
+              <header>General</header>
+              <ul>
+                <li>
+                  <aside className="pack-end">
+                    <label className="pack-switch">
+                      <input type="checkbox" checked={(this.state.settings.showCompleted.value) ? "checked" : ""} onChange={this._handleComplete}/>
+                      <span></span>
+                    </label>
+                  </aside>
+                  <p>Show completed prayers</p>
+                </li>
+              </ul>
+              <header>Prayer Options</header>
+              <ul>
+                <li>
+                  <div className="small">If you like to pray for just some of your prayer requests on a specific day,
+                    please enter a tag!
+                  </div>
+                  <div className="nice-tb-padding">
+                    <form>
+                      <p>
+                        <input type="text" placeholder="Monday" required="" name="monday" value={this.state.daysOfWeek.monday} onChange={this._handleInput}/>
+                      </p>
+                      <p>
+                        <input type="text" placeholder="Tuesday" required="" name="tuesday" value={this.state.daysOfWeek.tuesday} onChange={this._handleInput}/>
+                      </p>
+                      <p>
+                        <input type="text" placeholder="Wednesday" required="" name="wednesday" value={this.state.daysOfWeek.wednesday} onChange={this._handleInput}/>
+                      </p>
+                      <p>
+                        <input type="text" placeholder="Thursday" required="" name="thursday" value={this.state.daysOfWeek.thursday} onChange={this._handleInput}/>
+                      </p>
+                      <p>
+                        <input type="text" placeholder="Friday" required="" name="friday" value={this.state.daysOfWeek.friday} onChange={this._handleInput}/>
+                      </p>
+                      <p>
+                        <input type="text" placeholder="Saturday" required="" name="saturday" value={this.state.daysOfWeek.saturday} onChange={this._handleInput}/>
+                      </p>
+                      <p>
+                        <input type="text" placeholder="Sunday" required="" name="sunday" value={this.state.daysOfWeek.sunday} onChange={this._handleInput}/>
+                      </p>
+                    </form>
+                  </div>
+                  <div className="small">Available tags: {this.state.tags}</div>
+                </li>
+              </ul>
+            </section>
           </section>
         );
       }

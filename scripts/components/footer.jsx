@@ -23,12 +23,16 @@ var React = require('react'),
         this.setState({confirm: false});
       },
 
+      _handleComplete: function () {
+        uiEvents.tick();
+      },
+
       render: function() {
         var node;
         if(this.props.editMode) {
           node =  <footer role="toolbar">
                     <button data-icon="delete" onClick={this._handleConfirm}></button>
-                    <button data-icon="tick"></button>
+                    <button data-icon="tick" onClick={this._handleComplete}></button>
                     <Confirm onDelete={this._handleDelete} onCancel={this._handleCancel} show={this.state.confirm} />
                   </footer>;
         } else {

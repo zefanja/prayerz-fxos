@@ -11,13 +11,17 @@ var React = require('react'),
         var prayer = this.props.prayer;
         return (
           <li>
-            <label className="pack-checkbox">
-              <input type="checkbox" onChange={this.handleSelect}/>
-              <span></span>
-            </label>
-            <div>{prayer.title}</div>
+          <label className="pack-checkbox">
+            <input type="checkbox" onChange={this.handleSelect}/>
+            <span></span>
+          </label>
+            <div>
+              {prayer.title}
+              <span className={(prayer.complete) ? "tick": "hide"} data-icon="tick"></span>
+            </div>
             <div className="small">{prayer.text}</div>
             <div className="small light-font italic">{TagStore.getTagText(prayer.tags)}</div>
+
           </li>
         );
       }

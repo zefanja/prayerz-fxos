@@ -91,11 +91,22 @@ var PrayerStore = assign({}, EventEmitter.prototype, {
    * Get the entire collection of Prayers.
    * @return {object}
    */
-  getAll: function() {
-    return _prayers;
+  getAll: function(showCompleted) {
+    if(showCompleted === false) {
+      var p = {};
+      for (var id in _prayers) {
+        if(!_prayers[id].complete) {
+            p[id] = _prayers[id];
+        }
+      }
+      return p;
+    } else {
+      return _prayers;
+    }
+
   },
 
-  getByTagId: function (inIds) {
+  getByTagId: function (inIds, showCompleted) {
     var prayers = {};
     if(inIds) {
       for (var id in _prayers) {
@@ -106,7 +117,17 @@ var PrayerStore = assign({}, EventEmitter.prototype, {
         }
       }
     }
-    return prayers;
+    if(showCompleted === false) {
+      var p = {};
+      for (var key in prayers) {
+        if(!prayers[key].complete) {
+            p[key] = prayers[key];
+        }
+      }
+      return p;
+    } else {
+      return prayers;
+    }
   },
 
   emitChange: function() {
@@ -162,12 +183,8 @@ AppDispatcher.register(function(payload) {
       update(action.id, {complete: true});
       break;
 
-    case PrayerConstants.PRAYER_UPDATE_TEXT:
-      text = action.text.trim();
-      title = action.title.trim();
-      if (title !== '') {
-        update(action.id, {title: title, text: text});
-      }
+    case PrayerConstants.PRAYER_UPDATE:
+      update(action.id, action.updates);
       break;
 
     case PrayerConstants.PRAYER_DESTROY:

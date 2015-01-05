@@ -3,6 +3,7 @@ var assign = require('object-assign');
 
 var DONE_EVENT = 'done';
 var DESTROY_EVENT = 'destroy';
+var TICK_EVENT = 'tick';
 var UPDATE_EVENT = 'update';
 
 var uiEvents = assign({}, EventEmitter.prototype, {
@@ -26,6 +27,14 @@ var uiEvents = assign({}, EventEmitter.prototype, {
     this.removeListener(DESTROY_EVENT, callback);
   },
 
+  addTickListener: function(callback) {
+    this.on(TICK_EVENT, callback);
+  },
+
+  removeTickListener: function(callback) {
+    this.removeListener(TICK_EVENT, callback);
+  },
+
   addUpdateListener: function(callback) {
     this.on(UPDATE_EVENT, callback);
   },
@@ -40,6 +49,10 @@ var uiEvents = assign({}, EventEmitter.prototype, {
 
   destroy: function () {
     this.emitEvent(DESTROY_EVENT);
+  },
+
+  tick: function () {
+    this.emitEvent(TICK_EVENT);
   },
 
   updateSettings: function () {

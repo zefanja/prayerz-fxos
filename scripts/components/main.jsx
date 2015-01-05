@@ -35,12 +35,14 @@ var React = require('react'),
       },
 
       getPrayers: function () {
+        //console.log(this.state.settings);
+        var showCompleted = (this.state.settings.showCompleted.value) ? this.state.settings.showCompleted.value : false;
         var today = weekDays[new Date().getDay()];
         if(this.state.settings.daysOfWeek && this.state.settings.daysOfWeek[today].length !== 0) {
-          var prayers = PrayerStore.getByTagId(this.state.settings.daysOfWeek[today]);
+          var prayers = PrayerStore.getByTagId(this.state.settings.daysOfWeek[today], showCompleted);
           this.setState({prayers: prayers});
         } else {
-          this.setState({prayers: PrayerStore.getAll()});
+          this.setState({prayers: PrayerStore.getAll(showCompleted)});
         }
       },
 

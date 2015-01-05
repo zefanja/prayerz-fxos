@@ -18,6 +18,14 @@ var PrayerActions = {
 			ids: ids
 		});
 	},
+
+	update: function(id, updates) {
+	    AppDispatcher.handleViewAction({
+	      actionType: PrayerConstants.PRAYER_UPDATE,
+	      id: id,
+	      updates: updates
+	    });
+	  }
 };
 
 module.exports = PrayerActions;

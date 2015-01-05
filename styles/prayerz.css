@@ -49,6 +49,17 @@ section[role="region"] {
   display: block;
 }
 
+[data-type="list"] [data-icon].tick:before,
+.tick:before {
+  font-size: 15px;
+  line-height: 100%;
+}
+
+section[role="region"] > header:first-child {
+  color: #fff;
+  background-color: #4f9a06;
+}
+
 section[role="region"] > header:first-child a,
 section[role="region"] > header:first-child button,
 .white {

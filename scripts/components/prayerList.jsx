@@ -12,10 +12,12 @@ var React = require('react'),
 
       componentDidMount: function() {
         uiEvents.addDestroyListener(this._onDestroy);
+        uiEvents.addTickListener(this._onTick);
       },
 
       componentWillUnmount: function() {
         uiEvents.removeDestroyListener(this._onDestroy);
+        uiEvents.removeTickListener(this._onTick);
       },
 
       handleSelect: function (data) {
@@ -33,6 +35,12 @@ var React = require('react'),
         PrayerActions.destroy(this._selectedItems);
         this._selectedItems = [];
         return true;
+      },
+
+      _onTick: function () {
+        this._selectedItems.forEach(function (item) {
+          PrayerActions.update(item, {complete: true});
+        });
       },
 
       _handleAdd: function () {
@@ -69,3 +77,4 @@ var React = require('react'),
     });
 
 module.exports = PrayerList;
+
