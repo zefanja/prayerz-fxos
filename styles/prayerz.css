@@ -63,6 +63,15 @@ section[role="region"] > header:first-child button.hide,
   display: none;
 }
 
+.contact {
+  margin: 10px;
+
+}
+
+.contact a {
+  color: #333;
+}
+
 /* LISTS */
 [data-type="list"] li {
 	height: auto;

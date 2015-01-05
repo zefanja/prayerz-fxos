@@ -37,11 +37,18 @@ var React = require('react'),
           case "settings":
             this.setState({title: "Settings", back: true, add: false, cancel: false, done: false, right: true});
             break;
+          case "about":
+            this.setState({title: "About", back: true, add: false, cancel: false, done: false, right: true});
+            break;
         }
       },
 
       _handleAdd: function () {
         PageActions.setPage("add");
+      },
+
+      _handleAbout: function () {
+        PageActions.setPage("about");
       },
 
       _handleCancel: function () {
@@ -64,7 +71,7 @@ var React = require('react'),
         return (
             <section role="region">
               <header>
-                <a className={(this.state.add) ? "" : "hide"}></a>
+                <a className={(this.state.add) ? "" : "hide"} onClick={this._handleAbout}><span data-icon="info"></span></a>
                 <a className={(this.state.add) ? "" : "hide"}></a>
                 <a href="#" className={(this.state.back) ? "" : "hide"} onClick={this._handleCancel}><span className="icon icon-back">back</span></a>
                 <a href="#" className={(this.state.cancel) ? "" : "hide"} onClick={this._handleCancel}><span className="icon icon-close">close</span></a>

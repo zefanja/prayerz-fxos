@@ -4,6 +4,7 @@ var Header = require("./header.jsx");
 var PrayerList = require("./prayerList.jsx");
 var AddPrayer = require("./add.jsx");
 var Footer = require("./footer.jsx");
+var About = require("./about.jsx");
 var Settings = require("./settings.jsx");
 var PageStore = require('../stores/PageStore');
 var PrayerStore = require('../stores/PrayerStore');
@@ -35,9 +36,11 @@ var React = require('react'),
 
       getPrayers: function () {
         var today = weekDays[new Date().getDay()];
-        if(this.state.settings.daysOfWeek) {
+        if(this.state.settings.daysOfWeek && this.state.settings.daysOfWeek[today].length !== 0) {
           var prayers = PrayerStore.getByTagId(this.state.settings.daysOfWeek[today]);
           this.setState({prayers: prayers});
+        } else {
+          this.setState({prayers: PrayerStore.getAll()});
         }
       },
 
@@ -54,6 +57,9 @@ var React = require('react'),
           case "settings":
             page = <Settings />;
             break;
+          case "about":
+            page = <About />;
+            break;
         }
 
         return (
@@ -66,6 +72,7 @@ var React = require('react'),
               hide={
                 (Object.keys(this.state.prayers).length === 0 ||
                   this.state.activePage.id === "add" ||
+                  this.state.activePage.id === "about" ||
                   this.state.activePage.id === "settings") ?
                 true : false
               }
@@ -79,6 +86,7 @@ var React = require('react'),
         var active = PageStore.getActive();
         if(active.id === "main") {
           this.setState({editMode: false, activePage: active});
+          this.getPrayers();
         } else {
           this.setState({activePage: active});
         }
@@ -90,13 +98,7 @@ var React = require('react'),
       },
 
       _onPrayerChange: function () {
-        var prayers = PrayerStore.getAll();
-        this.setState({prayers: prayers});
-        /*if(Object.keys(prayers).length !== 0)
-          this.setState({prayers: prayers});
-        else {
-          this.setState({editMode: false, prayers: prayers});
-        }*/
+        this.getPrayers();
       }
     });
 
