@@ -8,7 +8,7 @@ var SETTINGS_EVENT = 'settings';
 
 var _pages = {
   "main": {visible:true, id: "main"},
-  "add": {visible:false, id: "add"},
+  "add": {visible:false, id: "add", prayer: null},
   "settings": {visible:false, id: "settings"},
   "about": {visible:false, id: "about"},
   "edit": {visible: false, id: "edit"}
@@ -16,10 +16,12 @@ var _pages = {
 
 var _settings = JSON.parse(localStorage.getItem("settings")) || {};
 
-function update(inId) {
+function update(inId, prayer) {
   for (var id in _pages) {
     if(id === inId) {
       _pages[id].visible = true;
+      if(id === "add")
+        _pages[id].prayer = (prayer) ? prayer : null;
     } else {
       _pages[id].visible = false;
     }
@@ -92,7 +94,7 @@ AppDispatcher.register(function(payload) {
 
   switch(action.actionType) {
     case PageConstants.PAGE_SWITCH:
-      update(action.id);
+      update(action.id, action.prayer);
       PageStore.emitChange();
       break;
     case PageConstants.PAGE_UPDATE_SETTINGS:

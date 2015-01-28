@@ -1,6 +1,7 @@
 'use strict';
 var PageStore = require('../stores/PageStore');
 var PrayerStore = require('../stores/PrayerStore');
+var TagStore = require('../stores/TagStore');
 var TagActions = require('../actions/TagActions');
 var PrayerActions = require('../actions/PrayerActions');
 var PageActions = require('../actions/PageActions');
@@ -19,10 +20,32 @@ var React = require('react'),
 
       componentDidMount: function() {
         uiEvents.addDoneListener(this._onDone);
+        this.handleProps(this.props);
       },
 
       componentWillUnmount: function() {
         uiEvents.removeDoneListener(this._onDone);
+      },
+
+      componentWillReceiveProps: function(nextProps) {
+        this.handleProps(nextProps);
+      },
+
+      handleProps: function (inProps) {
+        console.log(inProps.data);
+        if(inProps.data) {
+          this.setState({
+            title: inProps.data.title,
+            text: inProps.data.text,
+            tags: TagStore.getTagText(inProps.data.tags)
+          });
+        } else {
+          this.setState({
+            title: "",
+            tags: "",
+            text: ""
+          });
+        }
       },
 
       handleTitle: function (e) {
@@ -47,8 +70,11 @@ var React = require('react'),
 
       _onDone: function (e) {
         PageActions.setPage("main");
-        PrayerActions.create(this.state.title, this.state.text, this.state.tags);
-        console.log(PrayerStore.getAll());
+        if(!this.props.data) {
+          PrayerActions.create(this.state.title, this.state.text, this.state.tags);
+        } else {
+          PrayerActions.update(this.props.data.id, {title: this.state.title, text: this.state.text, tags: TagStore.getTagIds(this.state.tags)});
+        }
       },
 
       render: function() {

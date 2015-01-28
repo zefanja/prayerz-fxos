@@ -3,10 +3,11 @@ var PageConstants = require('../constants/PageConstants');
 
 var PageActions = {
   /** * @param {string} text */
-  setPage: function(id) {
+  setPage: function(id, prayer) {
     AppDispatcher.handleViewAction({
       actionType: PageConstants.PAGE_SWITCH,
-      id: id
+      id: id,
+      prayer: prayer
     });
   },
 

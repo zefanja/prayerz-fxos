@@ -16,7 +16,7 @@ var React = require('react'),
               <a href="https://twitter.com/zefanjas" target='_blank' className="nice-padding"><button data-icon="twitter">Twitter</button></a>
             </div>
             &copy; 2015 by <a href='http://zefanjas.de' target='_blank'>zefanjas.de</a>
-            <p><a href='https://github.com/zefanja/prayerz' target='_blank'>Source code on GitHub</a></p>
+            <p><a href='https://github.com/zefanja/prayerz-fxos' target='_blank'>Source code on GitHub</a></p>
           </section>
         );
       }

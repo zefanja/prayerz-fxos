@@ -108,7 +108,8 @@ var TagStore = assign({}, EventEmitter.prototype, {
     var tagNames = "";
     if(inTags) {
       inTags.forEach(function (i) {
-        tagNames += (tagNames === "") ? _tags[i].text : ", " + _tags[i].text;
+        if(_tags[i])
+          tagNames += (tagNames === "") ? _tags[i].text : ", " + _tags[i].text;
       });
     }
     return tagNames;
@@ -120,11 +121,7 @@ var TagStore = assign({}, EventEmitter.prototype, {
     if (inText && inText !== '') {
       tags = inText.split(",");
       tags.forEach(function (t) {
-        for (var key in _tags) {
-          if (_tags[key].text === t.trim().toLowerCase()) {
-            result.push(key);
-          }
-        }
+        result.push(create(t.trim().toLowerCase()));
       });
     }
     return result;

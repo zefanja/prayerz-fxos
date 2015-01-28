@@ -36,7 +36,7 @@ var React = require('react'),
 
       getPrayers: function () {
         //console.log(this.state.settings);
-        var showCompleted = (this.state.settings.showCompleted.value) ? this.state.settings.showCompleted.value : false;
+        var showCompleted = (this.state.settings.showCompleted && this.state.settings.showCompleted.value) ? this.state.settings.showCompleted.value : false;
         var today = weekDays[new Date().getDay()];
         if(this.state.settings.daysOfWeek && this.state.settings.daysOfWeek[today].length !== 0) {
           var prayers = PrayerStore.getByTagId(this.state.settings.daysOfWeek[today], showCompleted);
@@ -54,7 +54,7 @@ var React = require('react'),
             page = <PrayerList editMode={this.state.editMode} data={this.state.prayers}/>;
             break;
           case "add":
-            page = <AddPrayer />;
+            page = <AddPrayer data={this.state.activePage.prayer}/>;
             break;
           case "settings":
             page = <Settings />;

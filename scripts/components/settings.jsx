@@ -17,16 +17,19 @@ var React = require('react'),
       componentDidMount: function() {
         uiEvents.addUpdateListener(this._onUpdate);
         var savedTags = this.state.settings.daysOfWeek;
-        var daysOfWeek = {
-          "monday" : TagStore.getTagText(savedTags.monday),
-          "tuesday" : TagStore.getTagText(savedTags.tuesday),
-          "wednesday" : TagStore.getTagText(savedTags.wednesday),
-          "thursday" : TagStore.getTagText(savedTags.thursday),
-          "friday" : TagStore.getTagText(savedTags.friday),
-          "saturday" : TagStore.getTagText(savedTags.saturday),
-          "sunday" : TagStore.getTagText(savedTags.sunday)
-        };
-        this.setState({daysOfWeek: daysOfWeek});
+        if(savedTags) {
+          var daysOfWeek = {
+            "monday" : TagStore.getTagText(savedTags.monday),
+            "tuesday" : TagStore.getTagText(savedTags.tuesday),
+            "wednesday" : TagStore.getTagText(savedTags.wednesday),
+            "thursday" : TagStore.getTagText(savedTags.thursday),
+            "friday" : TagStore.getTagText(savedTags.friday),
+            "saturday" : TagStore.getTagText(savedTags.saturday),
+            "sunday" : TagStore.getTagText(savedTags.sunday)
+          };
+          this.setState({daysOfWeek: daysOfWeek});
+        }
+
       },
 
       componentWillUnmount: function() {
@@ -58,6 +61,7 @@ var React = require('react'),
       },
 
       render: function() {
+        var showCompleted = (this.state.settings.showCompleted && this.state.settings.showCompleted.value) ? this.state.settings.showCompleted.value : false;
         return (
           <section role="region" className="fit scroll">
             <section data-type="list">
@@ -66,7 +70,7 @@ var React = require('react'),
                 <li>
                   <aside className="pack-end">
                     <label className="pack-switch">
-                      <input type="checkbox" checked={(this.state.settings.showCompleted.value) ? "checked" : ""} onChange={this._handleComplete}/>
+                      <input type="checkbox" checked={(showCompleted) ? "checked" : ""} onChange={this._handleComplete}/>
                       <span></span>
                     </label>
                   </aside>

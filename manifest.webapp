@@ -3,7 +3,7 @@
     "installs_allowed_from": [
         "*"
     ],
-    "version": "0.0.1",
+    "version": "1.1.0",
     "name": "PrayerZ",
     "description": "Organize your prayer requests",
     "developer": {
@@ -12,6 +12,8 @@
     },
     "icons": {
         "60": "/dist/images/prayerz60.png",
+        "64": "/dist/images/prayerz64.png",
+        "90": "/dist/images/prayerz90.png",
         "128": "/dist/images/prayerz128.png",
         "256": "/dist/images/prayerz256.png",
         "512": "/dist/images/prayerz512.png"

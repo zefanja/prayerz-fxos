@@ -22,13 +22,20 @@ var React = require('react'),
 
       handleSelect: function (data) {
         this._selectedItems.forEach(function (item, idx) {
-          if(item === data.id)
+          if(item.id === data.id)
             this._selectedItems.splice(idx, 1);
         }.bind(this));
 
         if(data.checked) {
-          this._selectedItems.push(data.id);
+          this._selectedItems.push({id: data.id, complete: data.complete});
         }
+      },
+
+      handleTap: function (data) {
+        if(!this.props.editMode) {
+          PageActions.setPage("add", this.props.data[data.id]);
+        }
+
       },
 
       _onDestroy: function () {
@@ -39,7 +46,7 @@ var React = require('react'),
 
       _onTick: function () {
         this._selectedItems.forEach(function (item) {
-          PrayerActions.update(item, {complete: true});
+          PrayerActions.update(item.id, {complete: !item.complete});
         });
       },
 
@@ -53,7 +60,7 @@ var React = require('react'),
         var allPrayers = this.props.data;
         //console.log(allPrayers);
         for (var id in allPrayers) {
-          prayerItems.push(<PrayerItem prayer={allPrayers[id]} onSelect={this.handleSelect} />);
+          prayerItems.push(<PrayerItem prayer={allPrayers[id]} onSelect={this.handleSelect} onTap={this.handleTap} />);
         }
 
         if (prayerItems.length > 0) {

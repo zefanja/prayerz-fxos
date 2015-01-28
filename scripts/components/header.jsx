@@ -29,7 +29,7 @@ var React = require('react'),
             this.setState({title: "PrayerZ", back: false, add: true, cancel: false, done: false, right: false});
             break;
           case "add":
-            this.setState({title: "Add Prayer", back: false, add: false, cancel: true, done: true, right: false});
+            this.setState({title: (inProps.page.prayer) ? "Edit Prayer" : "Add Prayer", back: false, add: false, cancel: true, done: true, right: false});
             break;
           case "edit":
             this.setState({title: "Edit", back: false, add: false, cancel: true, done: false, right: true});

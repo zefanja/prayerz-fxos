@@ -52,8 +52,8 @@ function updateAll(updates) {
  * @param  {string} id
  */
 function destroy(ids) {
-  ids.forEach(function (id) {
-    delete _prayers[id];
+  ids.forEach(function (item) {
+    delete _prayers[item.id];
   });
 }
 
